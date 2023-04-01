@@ -1,7 +1,7 @@
 # AmbiencePlus
 A port of Vazkii's Ambience mod for Minecraft: https://www.curseforge.com/minecraft/mc-mods/ambience-music-mod.
 
-**Download the mod at CurseForge here: link soon**
+**Download the mod at CurseForge here: [https://www.curseforge.com/minecraft/mc-mods/ambienceplus](https://www.curseforge.com/minecraft/mc-mods/ambienceplus)**
 
 Please check out the wiki for instructions on using the mod.
 As with the original mod, this mod uses [JLayer](http://www.javazoom.net/javalayer/javalayer.html) to play music, and is distributed under a [Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License](http://creativecommons.org/licenses/by-nc-sa/3.0/deed.en_GB).
