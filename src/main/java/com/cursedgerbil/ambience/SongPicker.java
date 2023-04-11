@@ -56,8 +56,6 @@ public final class SongPicker {
 
 	public static final String EVENT_MAIN_MENU = "mainMenu";
 	public static final String EVENT_BOSS = "boss";
-	public static final String EVENT_BOSS_WITHER = "bossWither";
-	public static final String EVENT_BOSS_DRAGON = "bossDragon";
 	public static final String EVENT_IN_NETHER = "nether";
 	public static final String EVENT_IN_END = "end";
 	public static final String EVENT_HORDE = "horde";
@@ -119,7 +117,6 @@ public final class SongPicker {
 		if (eventr != null)
 			return eventr;
 
-		BossHealthOverlay bossOverlay = new BossHealthOverlay(mc);
 		if (AmbienceMod.bossPresent != null) {
 			
 			if (biomePriorityMap.containsKey(biomeid)) {
@@ -128,6 +125,13 @@ public final class SongPicker {
 					if (biomeMap.containsKey(biome))
 						return biomeMap.get(biome);
 				}
+			}
+			
+			String bossID = EVENT_BOSS + "." + AmbienceMod.bossPresent.replace(".", "");
+			System.out.println();
+			System.out.println(eventMap);
+			if (eventMap.containsKey(bossID)) {
+				return eventMap.get(bossID);
 			}
 
 			String[] songs = getSongsForEvent(EVENT_BOSS);
