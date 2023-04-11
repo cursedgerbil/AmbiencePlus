@@ -57,6 +57,9 @@ public final class SongLoader {
 					String keyType = tokens[0];
 					if(keyType.equals("event")) {	
 						String event = tokens[1];
+						if (event.contains("boss") && tokens.length > 2) {
+							event = "boss." + joinIdentifyingTokens(tokens);
+						}
 						
 						SongPicker.eventMap.put(event, props.getProperty(s).split(","));
 					} else if(keyType.equals("biome")) {
