@@ -26,6 +26,7 @@ public class PlayerThread extends Thread {
 		}
 	}
 	
+	public static float fadeMult = 1F;
 	public volatile static float gain = MAX_GAIN;
 	public volatile static float realGain = 0;
 	public volatile static String currentSong = null;
@@ -120,6 +121,11 @@ public class PlayerThread extends Thread {
 		setGain(getGain() + gain);
 	}
 	
+	public void setFadeMult(int ticks) {
+		float t = ticks / 40F;
+		fadeMult = 1f - t;
+	}
+	
 	public void setGain(float gain) {
 		this.gain = Math.min(MAX_GAIN, Math.max(MIN_GAIN, gain));
 		
@@ -131,7 +137,7 @@ public class PlayerThread extends Thread {
 	public void setRealGain() {
 		Options settings = Minecraft.getInstance().options;
 		float musicGain = settings.getSoundSourceVolume(SoundSource.MUSIC) * settings.getSoundSourceVolume(SoundSource.MASTER);
-		float realGain = MIN_GAIN + (MAX_GAIN - MIN_GAIN) * musicGain;
+		float realGain = MIN_GAIN + (MAX_GAIN - MIN_GAIN) * musicGain * fadeMult;
 		
 		this.realGain = realGain;
 		if (player != null) {
@@ -142,9 +148,6 @@ public class PlayerThread extends Thread {
 				} catch (IllegalArgumentException e) { }
 		}
 	}
-		if (musicGain == 0) {
-			play(null);
-		}
 		}
 		public float getRelativeVolume() {
 			return getRelativeVolume(getGain());
