@@ -121,6 +121,7 @@ public class AmbienceMod {
 						PlayerThread.currentSongChoices = songs;
 						changeSongTo(song);
 						fadeOutTicks = 0;
+						fadeInTicks = 0;
 						waitTick = WAIT_DURATION;
 					} else if(fadeOutTicks < FADE_DURATION) {
 						thread.setGain(PlayerThread.fadeGains[fadeOutTicks]);
@@ -134,6 +135,7 @@ public class AmbienceMod {
 							PlayerThread.currentSongChoices = songs;
 							changeSongTo(song);
 							fadeOutTicks = 0;
+							fadeInTicks = 0;
 							waitTick = WAIT_DURATION;
 						}
 					}
@@ -143,11 +145,20 @@ public class AmbienceMod {
 				thread.setGain(PlayerThread.fadeGains[0]);
 				silenceTicks = 0;
 				fadeOutTicks = 0;
+				fadeInTicks = 0;
 				waitTick = WAIT_DURATION;
 			}
 			
-			if(thread != null)
+			if(thread != null) {
+				if (fadeOutTicks > 0) {
+					thread.setFadeMult(fadeOutTicks);
+				}
+				else {
+					if (fadeInTicks < 40) {fadeInTicks++;}
+					thread.setFadeMult(40 - fadeInTicks);
+				}
 				thread.setRealGain();
+			}
 		}
 	}
 	
@@ -179,7 +190,21 @@ public class AmbienceMod {
 	
 	@SubscribeEvent
 	public void CheckForBoss(CustomizeGuiOverlayEvent.BossEventProgress event) {
-		bossPresent = event.getBossEvent().getName().toString();
+		String[] bossChars = event.getBossEvent().getName().getContents().toString().split("");
+		int idstart = 0;
+		int idend = 0;
+		String bossName = "";
+		for (int f = 0; f < bossChars.length; f++) {
+			if (idend == 0) {
+			if (bossChars[f].equals("'")) {
+				if (idstart == 0) {idstart = f;} else {idend = f;}
+			}
+			}
+		}
+		for (int g = idstart + 1; g < idend; g++) {
+			bossName = bossName.concat(bossChars[g]);
+		}
+		bossPresent = bossName;
 		bossDelay = 0;
 	}
 	
